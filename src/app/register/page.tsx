@@ -28,7 +28,7 @@ export default function RegisterPage() {
       } else {
         setMessage(`❌ ${data.message}`)
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
       setMessage('❌ Sunucu hatası.')
     }

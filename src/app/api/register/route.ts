@@ -20,6 +20,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'Email already exists' }, { status: 409 })
     }
 
+     const existingUserName = await prisma.user.findUnique({ where: { name } })
+    if (existingUserName) {
+      return NextResponse.json({ message: 'Name already exists' }, { status: 409 })
+    }
     // Kullanıcıyı oluştur
     const newUser = await prisma.user.create({
       data: {

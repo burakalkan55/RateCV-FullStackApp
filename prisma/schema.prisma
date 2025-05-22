@@ -12,5 +12,7 @@ model User {
   name      String   @unique
   email     String   @unique
   password  String
+  bio      String?  
+  cvUrl    String? 
   createdAt DateTime @default(now())
 }

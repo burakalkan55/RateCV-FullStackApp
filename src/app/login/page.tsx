@@ -1,5 +1,5 @@
 'use client'
-
+import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import styles from '../../styles/LoginPage.module.css'
 
@@ -7,6 +7,9 @@ export default function LoginPage() {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
+
+  const router = useRouter()
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,6 +27,7 @@ export default function LoginPage() {
         setMessage('✅ Login successful!')
         setName('')
         setPassword('')
+        router.push('/profile') // Redirect to dashboard or home page
         // TODO: Redirect (e.g. /dashboard)
       } else {
         setMessage(`❌ ${data.message}`)

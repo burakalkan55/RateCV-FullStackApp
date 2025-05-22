@@ -129,12 +129,13 @@ background: linear-gradient(90deg, #faf6f0 0%, #f1e3cb 50%, #ede4d1 100%);
   }
   .button {
     width: 100%;
-    text-align: left;
+    text-align: center;
     padding: 12px 0;
     border-radius: 16px;
     font-size: 1.1rem;
   }
   .hamburger {
     display: flex;
+    text-align: center;
   }
 }

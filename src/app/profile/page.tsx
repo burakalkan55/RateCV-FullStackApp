@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import styles from '../../styles/profile.module.css'
+import styles from '../../styles/Profile.module.css'
 import { useRouter } from 'next/navigation'
 
 

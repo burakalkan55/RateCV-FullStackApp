@@ -64,3 +64,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'Update failed' }, { status: 500 })
   }
 }
+
+
+
+export async function DELETE() {
+  const userId = 1 // gerçek sistemde token'dan alınır
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { cvUrl: null },
+  })
+
+  return NextResponse.json({ message: 'CV deleted' })
+}

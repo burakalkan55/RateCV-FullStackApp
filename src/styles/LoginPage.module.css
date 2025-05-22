@@ -1,6 +1,6 @@
 .wrapper {
   min-height: 100vh;
-  background: linear-gradient(to bottom, #f3f4f8 0%, #fdf6e3 100%);
+  background: linear-gradient(120deg, #fffdf7 0%, #fff9e1 60%, #fffbe7 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,7 +14,7 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   padding: 56px 48px;
   width: 100%;
-  max-width: 640px; /* ✅ Daha geniş kart */
+  max-width: 40vw; /* ✅ Daha geniş kart */
   display: flex;
   flex-direction: column;
   align-items: stretch;

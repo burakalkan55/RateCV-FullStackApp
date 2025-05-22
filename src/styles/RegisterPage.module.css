@@ -1,75 +1,53 @@
 /* register.css */
 
-
-
+/* Mevcut container'ı koruyup dış boşlukları artırıyoruz */
 .register-container {
   min-height: 100vh;
-  background: #fff;
+  background: linear-gradient(to bottom, #f3f4f8 0%, #fdf6e3 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 2rem; /* 💥 EKLENDİ: Dış boşluk */
+  box-sizing: border-box;
 }
 
 .register-card {
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  padding: 40px;
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  padding: 48px 36px 36px 36px;
   width: 100%;
-  max-width: 800px; /* was 450px, now wider */
-  animation: fadeInUp 0.6s ease-out;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  max-width: 40vw;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .register-header {
   text-align: center;
-  margin-bottom: 40px;
-}
-
-.icon-container {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-}
-
-.icon-container span {
-  font-size: 28px;
-  color: white;
+  margin-bottom: 32px;
 }
 
 .register-title {
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 700;
-  color: #2d3748;
+  color: #232323;
   margin-bottom: 8px;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 .register-subtitle {
-  color: #718096;
-  font-size: 16px;
+  color: #888;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 .form-container {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 22px;
 }
 
 .input-group {
@@ -78,136 +56,135 @@
 }
 
 .input-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #4a5568;
-  margin-bottom: 8px;
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: #232323;
+  margin-bottom: 7px;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 .form-input {
   width: 100%;
-  padding: 15px 18px;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 16px;
-  transition: all 0.3s ease;
+  padding: 16px 18px;
+  border: none;
+  border-radius: 22px;
+  font-size: 1rem;
+  background: #f7f7fa;
+  color: #232323;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
   outline: none;
-  background: #fafafa;
-  color: #2d3748; /* <-- Ensure text is visible */
+  transition: box-shadow 0.2s;
 }
 
 .form-input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-  background: #fff;
-  color: #2d3748; /* <-- Ensure text is visible on focus */
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 2px #ffe066;
+  background: #fffbe7;
 }
 
 .form-input::placeholder {
-  color: #a0aec0; /* <-- Lighter gray for placeholder */
+  color: #bdbdbd;
+  font-size: 1rem;
 }
 
 .submit-button {
   width: 100%;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  padding: 16px;
+  background: #ffe066;
+  color: #232323;
+  padding: 16px 0;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  margin-top: 10px;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(255, 224, 102, 0.12);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 .submit-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-}
-
-.submit-button:active {
-  transform: translateY(-1px);
+  background: #ffe799;
 }
 
 .message-container {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 10px;
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 12px;
   text-align: center;
   font-weight: 600;
+  font-size: 1rem;
   animation: slideIn 0.3s ease-out;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
 .message-success {
-  background: linear-gradient(135deg, #48bb78, #38a169);
-  color: white;
-  border: none;
+  background: #e6ffed;
+  color: #22863a;
+  border: 1px solid #b7ebc6;
 }
 
 .message-error {
-  background: linear-gradient(135deg, #f56565, #e53e3e);
-  color: white;
-  border: none;
+  background: #fff0f0;
+  color: #e53e3e;
+  border: 1px solid #fbb6b6;
 }
 
 .login-link-container {
-  margin-top: 30px;
+  margin-top: 24px;
   text-align: center;
-  padding-top: 20px;
-  border-top: 1px solid #e2e8f0;
+  padding-top: 16px;
+  border-top: 1px solid #f2f2f2;
 }
 
 .login-link-text {
-  color: #718096;
-  font-size: 15px;
+  color: #888;
+  font-size: 0.97rem;
 }
 
 .login-link {
-  color: #667eea;
-  text-decoration: none;
+  color: #232323;
+  text-decoration: underline;
   font-weight: 600;
-  transition: color 0.3s ease;
+  margin-left: 4px;
+  transition: color 0.2s;
 }
 
 .login-link:hover {
-  color: #764ba2;
-  text-decoration: underline;
+  color: #ffe066;
 }
 
-/* Responsive Design */
-@media (max-width: 480px) {
-  .register-container {
-    padding: 15px;
-  }
-  
+/* Genel padding'leri artırdım ve boşlukları iyileştirdim */
+@media (max-width: 1200px) {
   .register-card {
-    padding: 30px 25px;
+    max-width: 92vw;
+    padding: 36px 32px;
+    margin: 1rem;
   }
-  
+}
+
+@media (max-width: 800px) {
+  .register-card {
+    max-width: 95vw;
+    padding: 28px 20px;
+    margin: 1.2rem;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 500px) {
+  .register-card {
+    padding: 24px 16px;
+    margin: 1.5rem;
+    max-width: 100%;
+    border-radius: 14px;
+  }
+
   .register-title {
-    font-size: 28px;
+    font-size: 1.3rem;
   }
-  
-  .icon-container {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .icon-container span {
-    font-size: 24px;
+
+  .form-input, .submit-button {
+    font-size: 0.97rem;
+    padding: 12px 10px;
+    border-radius: 14px;
   }
 }

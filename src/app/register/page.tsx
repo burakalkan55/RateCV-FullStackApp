@@ -45,20 +45,17 @@ export default function RegisterPage() {
     <div className={styles['register-container']}>
       <div className={styles['register-card']}>
         <div className={styles['register-header']}>
-          <div className={styles['icon-container']}>
-            <span>👤</span>
-          </div>
-          <h1 className={styles['register-title']}>Kayıt Ol</h1>
-          <p className={styles['register-subtitle']}>Hesabınızı oluşturun</p>
+          <h1 className={styles['register-title']}>Create an account</h1>
+         
         </div>
 
         <form onSubmit={handleSubmit} className={styles['form-container']}>
           <div className={styles['input-group']}>
-            <label className={styles['input-label']}>İsim</label>
+            <label className={styles['input-label']}>Full name</label>
             <input
               type="text"
               className={styles['form-input']}
-              placeholder="Adınızı girin"
+              placeholder="Full name"
               value={name}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
               required
@@ -66,11 +63,11 @@ export default function RegisterPage() {
           </div>
 
           <div className={styles['input-group']}>
-            <label className={styles['input-label']}>E-posta</label>
+            <label className={styles['input-label']}>Email</label>
             <input
               type="email"
               className={styles['form-input']}
-              placeholder="ornek@email.com"
+              placeholder="Email"
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               required
@@ -78,11 +75,11 @@ export default function RegisterPage() {
           </div>
 
           <div className={styles['input-group']}>
-            <label className={styles['input-label']}>Şifre</label>
+            <label className={styles['input-label']}>Password</label>
             <input
               type="password"
               className={styles['form-input']}
-              placeholder="Güçlü bir şifre girin"
+              placeholder="Password"
               value={password}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               required
@@ -90,7 +87,7 @@ export default function RegisterPage() {
           </div>
 
           <button type="submit" className={styles['submit-button']}>
-            Kaydol
+            Submit
           </button>
         </form>
 
@@ -104,9 +101,9 @@ export default function RegisterPage() {
 
         <div className={styles['login-link-container']}>
           <p className={styles['login-link-text']}>
-            Zaten hesabınız var mı?{' '}
+            Already have an account?
             <a href="/login" className={styles['login-link']}>
-              Giriş yapın
+              Log in
             </a>
           </p>
         </div>

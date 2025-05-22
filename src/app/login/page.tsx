@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from '../../styles/LoginPage.module.css'
 
 export default function LoginPage() {
@@ -21,43 +21,64 @@ export default function LoginPage() {
 
       const data = await res.json()
       if (res.ok) {
-        setMessage('✅ Giriş başarılı!')
+        setMessage('✅ Login successful!')
         setName('')
         setPassword('')
-        // TODO: Yönlendirme yapılabilir (örneğin /dashboard)
+        // TODO: Redirect (e.g. /dashboard)
       } else {
         setMessage(`❌ ${data.message}`)
       }
     } catch (error) {
       console.error(error)
-      setMessage('❌ Sunucu hatası.')
+      setMessage('❌ Server error.')
     }
   }
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(''), 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [message])
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.formContainer}>
-        <h1 className={styles.title}>🔐 Login</h1>
+        <h1 className={styles.title}>Sign in to your account</h1>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <input
-            type="text"
-            placeholder="Kullanıcı adı"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={styles.input}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Şifre"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
-            required
-          />
-          <button type="submit" className={styles.button}>Giriş Yap</button>
+          <div className={styles.inputGroup}>
+            <label className={styles.inputLabel}>Full name</label>
+            <input
+              type="text"
+              placeholder="Full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <label className={styles.inputLabel}>Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+          <button type="submit" className={styles.button}>Sign in</button>
         </form>
-        {message && <p className={styles.message}>{message}</p>}
+        {message && <div className={styles.message}>{message}</div>}
+        <div className={styles.registerLinkContainer}>
+          <p className={styles.registerLinkText}>
+            Don&apos;t have an account?
+            <a href="/register" className={styles.registerLink}>
+              Sign up
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   )

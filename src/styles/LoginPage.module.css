@@ -1,80 +1,181 @@
-
 .wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-  padding: 2rem;
+  background: linear-gradient(to bottom, #f3f4f8 0%, #fdf6e3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px; /* ✅ Kenarlardan nefes aldırdık */
+  box-sizing: border-box;
 }
 
 .formContainer {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  padding: 56px 48px;
   width: 100%;
-  max-width: 500px;
-  background-color: #ffffff;
-  border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  max-width: 640px; /* ✅ Daha geniş kart */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition: all 0.3s ease;
 }
 
 .title {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
+  color: #232323;
+  margin-bottom: 32px;
   text-align: center;
-  margin-bottom: 2rem;
-  color: #2c3e50;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 22px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputLabel {
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: #232323;
+  margin-bottom: 7px;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 .input {
-  padding: 1rem;
+  width: 100%;
+  padding: 16px 18px;
+  border: none;
+  border-radius: 22px;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  background-color: #f9f9f9;
-  transition: all 0.3s ease;
+  background: #f7f7fa;
+  color: #232323;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  outline: none;
+  transition: box-shadow 0.2s;
 }
 
 .input:focus {
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-  outline: none;
+  box-shadow: 0 0 0 2px #ffe066;
+  background: #fffbe7;
+}
+
+.input::placeholder {
+  color: #bdbdbd;
+  font-size: 1rem;
 }
 
 .button {
-  padding: 1rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #fff;
-  background-color: #4a90e2;
+  width: 100%;
+  background: #ffe066;
+  color: #232323;
+  padding: 16px 0;
   border: none;
-  border-radius: 12px;
+  border-radius: 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(255, 224, 102, 0.12);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 .button:hover {
-  background-color: #357abd;
+  background: #ffe799;
 }
 
 .message {
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 12px;
   text-align: center;
-  font-weight: 500;
-  margin-top: 1rem;
-  color: #2c3e50;
+  font-weight: 600;
+  font-size: 1rem;
+  animation: slideIn 0.3s ease-out;
+  background: #f7fafc;
+  color: #232323;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.registerLinkContainer {
+  margin-top: 24px;
+  text-align: center;
+  padding-top: 16px;
+  border-top: 1px solid #f2f2f2;
+}
+
+.registerLinkText {
+  color: #888;
+  font-size: 0.97rem;
+}
+
+.registerLink {
+  color: #232323;
+  text-decoration: underline;
+  font-weight: 600;
+  margin-left: 4px;
+  transition: color 0.2s;
+}
+
+.registerLink:hover {
+  color: #ffe066;
+}
+
+@media (max-width: 768px) {
   .formContainer {
-    padding: 2rem 1.2rem;
+    padding: 40px 24px;
+    max-width: 90vw;
+    border-radius: 22px;
   }
 
   .title {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
+  }
+
+  .input, .button {
+    font-size: 1rem;
+    padding: 14px 12px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formContainer {
+    padding: 24px 16px;
+    max-width: 95vw;
+    border-radius: 14px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .input, .button {
+    font-size: 0.95rem;
+    padding: 12px 10px;
+    border-radius: 12px;
+  }
+
+  .message {
+    padding: 10px;
+    font-size: 14px;
   }
 }

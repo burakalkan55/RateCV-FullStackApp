@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import styles from '../../styles/Profile.module.css'
+import styles from '../../styles/profile.module.css'
+import { useRouter } from 'next/navigation'
+
 
 export default function ProfilePage() {
   const [name, setName] = useState('')
@@ -10,7 +12,7 @@ export default function ProfilePage() {
   const [cvUrl, setCvUrl] = useState<string | null>(null)
   const [cvFile, setCvFile] = useState<File | null>(null)
   const [message, setMessage] = useState('')
-
+ const router = useRouter()
   useEffect(() => {
     const fetchProfile = async () => {
       const res = await fetch('/api/me')
@@ -43,6 +45,12 @@ export default function ProfilePage() {
       setCvUrl(data.cvUrl)
     }
   }
+
+  const handleLogout = async () => {
+  await fetch('/api/logout', { method: 'POST' })
+  router.push('/login')
+}
+
 
   const handleDeleteCV = async () => {
     const res = await fetch('/api/me/delete-cv', { method: 'DELETE' })
@@ -85,6 +93,11 @@ export default function ProfilePage() {
         <button className={styles.button} onClick={handleUpdate}>
           💾 Kaydet
         </button>
+
+        <button className={styles.logoutButton} onClick={handleLogout}>
+  🚪 Çıkış Yap
+</button>
+
 
         {message && <p className={styles.message}>{message}</p>}
       </div>

@@ -57,7 +57,7 @@
 .textarea {
   min-height: 100px;
   resize: vertical;
-  color: #232323; /* or use #000 for pure black */
+  color: #181818; /* daha koyu ve okunaklı */
 }
 
 .cvSection {
@@ -107,3 +107,20 @@
   font-weight: 600;
   color: #2e7d32;
 }
+
+.logoutButton {
+  background: #ff4d4d;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  margin-top: 2rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.logoutButton:hover {
+  background: #e60000;
+}
+

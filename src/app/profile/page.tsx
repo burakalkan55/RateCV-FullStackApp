@@ -8,7 +8,7 @@ export default function ProfilePage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [bio, setBio] = useState('')
-  const [cvUrl, setCvUrl] = useState<string | null>(null)
+
   const [cvBase64, setCvBase64] = useState<string | null>(null)
   const [cvFile, setCvFile] = useState<File | null>(null)
   const [message, setMessage] = useState('')
@@ -22,7 +22,7 @@ export default function ProfilePage() {
       setName(data.name || '')
       setEmail(data.email || '')
       setBio(data.bio || '')
-      setCvUrl(data.cvUrl || null)
+     
       setCvBase64(data.cvBase64 || null)
     }
 
@@ -65,7 +65,7 @@ export default function ProfilePage() {
     setMessage(res.ok ? '✅ Profil güncellendi!' : `❌ ${data.message}`)
 
     if (res.ok) {
-      if (data.cvUrl) setCvUrl(data.cvUrl)
+      
       if (data.cvBase64) setCvBase64(data.cvBase64)
     }
   }
@@ -78,7 +78,7 @@ export default function ProfilePage() {
   const handleDeleteCV = async () => {
     const res = await fetch('/api/me/delete-cv', { method: 'DELETE' })
     if (res.ok) {
-      setCvUrl(null)
+      
       setCvBase64(null)
     }
   }

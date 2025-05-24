@@ -9,6 +9,7 @@ export default function ProfilePage() {
   const [email, setEmail] = useState('')
   const [bio, setBio] = useState('')
   const [cvUrl, setCvUrl] = useState<string | null>(null)
+  const [cvBase64, setCvBase64] = useState<string | null>(null)
   const [cvFile, setCvFile] = useState<File | null>(null)
   const [message, setMessage] = useState('')
   const router = useRouter()
@@ -22,10 +23,22 @@ export default function ProfilePage() {
       setEmail(data.email || '')
       setBio(data.bio || '')
       setCvUrl(data.cvUrl || null)
+      setCvBase64(data.cvBase64 || null)
     }
 
     fetchProfile()
   }, [])
+
+  const handleViewPDF = () => {
+  if (!cvBase64) return
+  const byteCharacters = atob(cvBase64)
+  const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i))
+  const byteArray = new Uint8Array(byteNumbers)
+  const blob = new Blob([byteArray], { type: 'application/pdf' })
+  const blobUrl = URL.createObjectURL(blob)
+  window.open(blobUrl, '_blank')
+}
+
 
   const handleUpdate = async () => {
     const formData = new FormData()
@@ -36,8 +49,8 @@ export default function ProfilePage() {
         setMessage('❌ Sadece PDF dosyası yüklenebilir.')
         return
       }
-      if (cvFile.size > 1000 * 1024) {
-        setMessage('❌ Dosya boyutu 1MByi geçemez.')
+      if (cvFile.size > 100 * 1024) {
+        setMessage('❌ Dosya boyutu 100KB\'yi geçemez.')
         return
       }
       formData.append('cv', cvFile)
@@ -51,8 +64,9 @@ export default function ProfilePage() {
     const data = await res.json()
     setMessage(res.ok ? '✅ Profil güncellendi!' : `❌ ${data.message}`)
 
-    if (res.ok && data.cvUrl) {
-      setCvUrl(data.cvUrl)
+    if (res.ok) {
+      if (data.cvUrl) setCvUrl(data.cvUrl)
+      if (data.cvBase64) setCvBase64(data.cvBase64)
     }
   }
 
@@ -63,7 +77,10 @@ export default function ProfilePage() {
 
   const handleDeleteCV = async () => {
     const res = await fetch('/api/me/delete-cv', { method: 'DELETE' })
-    if (res.ok) setCvUrl(null)
+    if (res.ok) {
+      setCvUrl(null)
+      setCvBase64(null)
+    }
   }
 
   return (
@@ -91,13 +108,16 @@ export default function ProfilePage() {
           onChange={(e) => setCvFile(e.target.files?.[0] || null)}
           className={styles.input}
         />
+{cvBase64 && (
+  <div className={styles.cvSection}>
+    <button className={styles.viewButton} onClick={handleViewPDF}>
+      📄 CV’yi Yeni Sekmede Aç
+    </button>
+    <button className={styles.deleteButton} onClick={handleDeleteCV}>❌ Sil</button>
+  </div>
+)}
 
-        {cvUrl && (
-          <div className={styles.cvSection}>
-            <a href={cvUrl} target="_blank" rel="noopener noreferrer">📎 Güncel CV’yi Görüntüle</a>
-            <button className={styles.deleteButton} onClick={handleDeleteCV}>❌ Sil</button>
-          </div>
-        )}
+
 
         <button className={styles.button} onClick={handleUpdate}>
           💾 Kaydet

@@ -58,8 +58,8 @@ export async function POST(req: NextRequest) {
       }
 
       // 100KB sınırı
-      if (file.size > 100 * 1024) {
-        return NextResponse.json({ message: 'Dosya 100KB\'den büyük olamaz.' }, { status: 400 })
+      if (file.size > 10000 * 1024) {
+        return NextResponse.json({ message: 'Dosya 1MB\'den büyük olamaz.' }, { status: 400 })
       }
 
       const buffer = Buffer.from(await file.arrayBuffer())

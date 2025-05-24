@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
-import { writeFile } from 'fs/promises'
-import path from 'path'
-import { randomUUID } from 'crypto'
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 
@@ -27,17 +24,17 @@ export async function GET() {
     })
 
     if (!user) {
-      return NextResponse.json({ message: 'User not found' }, { status: 404 })
+      return NextResponse.json({ message: 'Kullanıcı bulunamadı' }, { status: 404 })
     }
 
-    return NextResponse.json(user, { status: 200 })
-  } catch (error) {
-    console.error('GET /api/me error:', error)
-    return NextResponse.json({ message: 'Invalid token' }, { status: 401 })
+    return NextResponse.json(user)
+  } catch (err) {
+    console.error('GET /api/me error:', err)
+    return NextResponse.json({ message: 'Token geçersiz' }, { status: 401 })
   }
 }
 
-// 📝 POST → Kullanıcı profilini güncelle
+// 📝 POST → Kullanıcı profilini güncelle (sadece PDF, max 100KB)
 export async function POST(req: NextRequest) {
   const token = (await cookies()).get('token')?.value
   if (!token) return NextResponse.json({ message: 'Yetkisiz erişim' }, { status: 401 })
@@ -52,23 +49,43 @@ export async function POST(req: NextRequest) {
     let cvUrl = null
 
     if (file && file.size > 0) {
-      const buffer = Buffer.from(await file.arrayBuffer())
-      const filename = `${randomUUID()}-${file.name}`
-      const uploadPath = path.join(process.cwd(), 'public', 'uploads', filename)
+      // sadece .pdf
+      if (!file.name.toLowerCase().endsWith('.pdf')) {
+        return NextResponse.json({ message: 'Sadece PDF dosyası kabul edilir.' }, { status: 400 })
+      }
 
-      await writeFile(uploadPath, buffer)
+      // 100KB sınırı
+      if (file.size > 100 * 1024) {
+        return NextResponse.json({ message: 'Dosya 100KB\'den büyük olamaz.' }, { status: 400 })
+      }
+
+      const buffer = Buffer.from(await file.arrayBuffer())
+      const filename = `${Date.now()}-${file.name}`
+      const uploadPath = `${process.cwd()}/public/uploads/${filename}`
+
+      // Render desteklemediği için yazma yapılmaz
+      if (process.env.NODE_ENV === 'production') {
+        return NextResponse.json({ message: 'Render ortamında dosya kaydedilemez.' }, { status: 500 })
+      }
+
+      const fs = await import('fs/promises')
+      await fs.writeFile(uploadPath, buffer)
       cvUrl = `/uploads/${filename}`
     }
 
     const updated = await prisma.user.update({
       where: { id: decoded.id },
-      data: { name, bio, ...(cvUrl && { cvUrl }) },
+      data: {
+        name,
+        bio,
+        ...(cvUrl && { cvUrl }),
+      },
     })
 
-    return NextResponse.json({ message: 'Profile updated', cvUrl: updated.cvUrl }, { status: 200 })
-  } catch (error) {
-    console.error('POST /api/me error:', error)
-    return NextResponse.json({ message: 'Update failed' }, { status: 500 })
+    return NextResponse.json({ message: 'Profil güncellendi', cvUrl: updated.cvUrl })
+  } catch (err) {
+    console.error('POST /api/me error:', err)
+    return NextResponse.json({ message: 'Sunucu hatası' }, { status: 500 })
   }
 }
 
@@ -85,9 +102,9 @@ export async function DELETE() {
       data: { cvUrl: null },
     })
 
-    return NextResponse.json({ message: 'CV deleted' }, { status: 200 })
-  } catch (error) {
-    console.error('DELETE /api/me error:', error)
-    return NextResponse.json({ message: 'Silme başarısız' }, { status: 500 })
+    return NextResponse.json({ message: 'CV silindi' })
+  } catch (err) {
+    console.error('DELETE /api/me error:', err)
+    return NextResponse.json({ message: 'Silme hatası' }, { status: 500 })
   }
 }

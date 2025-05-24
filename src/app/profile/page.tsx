@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import styles from '../../styles/Profile.module.css'
 import { useRouter } from 'next/navigation'
 
-
 export default function ProfilePage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -12,7 +11,8 @@ export default function ProfilePage() {
   const [cvUrl, setCvUrl] = useState<string | null>(null)
   const [cvFile, setCvFile] = useState<File | null>(null)
   const [message, setMessage] = useState('')
- const router = useRouter()
+  const router = useRouter()
+
   useEffect(() => {
     const fetchProfile = async () => {
       const res = await fetch('/api/me')
@@ -31,7 +31,17 @@ export default function ProfilePage() {
     const formData = new FormData()
     formData.append('name', name)
     formData.append('bio', bio)
-    if (cvFile) formData.append('cv', cvFile)
+    if (cvFile) {
+      if (cvFile.type !== 'application/pdf') {
+        setMessage('❌ Sadece PDF dosyası yüklenebilir.')
+        return
+      }
+      if (cvFile.size > 1000 * 1024) {
+        setMessage('❌ Dosya boyutu 1MByi geçemez.')
+        return
+      }
+      formData.append('cv', cvFile)
+    }
 
     const res = await fetch('/api/me', {
       method: 'POST',
@@ -47,10 +57,9 @@ export default function ProfilePage() {
   }
 
   const handleLogout = async () => {
-  await fetch('/api/logout', { method: 'POST' })
-  router.push('/login')
-}
-
+    await fetch('/api/logout', { method: 'POST' })
+    router.push('/login')
+  }
 
   const handleDeleteCV = async () => {
     const res = await fetch('/api/me/delete-cv', { method: 'DELETE' })
@@ -75,10 +84,10 @@ export default function ProfilePage() {
           placeholder="Kendinizi kısaca tanıtın"
         />
 
-        <label className={styles.label}>Yeni CV Yükle (.pdf, .jpg, .png)</label>
+        <label className={styles.label}>CV Yükle (.pdf / max 100KB)</label>
         <input
           type="file"
-          accept=".pdf,.jpg,.png"
+          accept=".pdf"
           onChange={(e) => setCvFile(e.target.files?.[0] || null)}
           className={styles.input}
         />
@@ -95,9 +104,8 @@ export default function ProfilePage() {
         </button>
 
         <button className={styles.logoutButton} onClick={handleLogout}>
-  🚪 Çıkış Yap
-</button>
-
+          🚪 Çıkış Yap
+        </button>
 
         {message && <p className={styles.message}>{message}</p>}
       </div>

@@ -74,11 +74,9 @@ export default function ProfilePage() {
     await fetch('/api/logout', { method: 'POST' })
     router.push('/login')
   }
-
   const handleDeleteCV = async () => {
-    const res = await fetch('/api/me/delete-cv', { method: 'DELETE' })
+    const res = await fetch('/api/me', { method: 'DELETE' })
     if (res.ok) {
-      
       setCvBase64(null)
     }
   }

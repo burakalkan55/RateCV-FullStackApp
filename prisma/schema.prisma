@@ -24,7 +24,7 @@ model Account {
   id                 Int       @id @default(autoincrement())
   userId             Int
   type               String
-  provider           String
+  provider           Strin
   providerAccountId  String
   refresh_token      String?   @db.Text
   access_token       String?   @db.Text

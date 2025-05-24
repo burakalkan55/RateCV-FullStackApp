@@ -14,7 +14,7 @@ model User {
   password  String
   bio       String?
   cvUrl     String?
-  cvBase64  String?  // PDF içeriği base64 formatında tutulur
+  cvBase64  String?  
   createdAt DateTime @default(now())
   accounts  Account[]
   sessions  Session[]

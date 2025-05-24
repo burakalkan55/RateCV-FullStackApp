@@ -13,6 +13,7 @@ export async function GET() {
 
   try {
     const decoded = jwt.verify(token, secret) as { id: number }
+
     const user = await prisma.user.findUnique({
       where: { id: decoded.id },
       select: {
@@ -20,6 +21,7 @@ export async function GET() {
         email: true,
         bio: true,
         cvUrl: true,
+        cvBase64: true,
       },
     })
 
@@ -46,7 +48,8 @@ export async function POST(req: NextRequest) {
     const bio = formData.get('bio')?.toString() || ''
     const file = formData.get('cv') as File | null
 
-    let cvUrl = null
+    let cvUrl: string | null = null
+    let cvBase64: string | null = null
 
     if (file && file.size > 0) {
       // sadece .pdf
@@ -60,29 +63,21 @@ export async function POST(req: NextRequest) {
       }
 
       const buffer = Buffer.from(await file.arrayBuffer())
-      const filename = `${Date.now()}-${file.name}`
-      const uploadPath = `${process.cwd()}/public/uploads/${filename}`
-
-      // Render desteklemediği için yazma yapılmaz
-      if (process.env.NODE_ENV === 'production') {
-        return NextResponse.json({ message: 'Render ortamında dosya kaydedilemez.' }, { status: 500 })
-      }
-
-      const fs = await import('fs/promises')
-      await fs.writeFile(uploadPath, buffer)
-      cvUrl = `/uploads/${filename}`
+      cvUrl = file.name
+      cvBase64 = buffer.toString('base64')
     }
 
-    const updated = await prisma.user.update({
+    await prisma.user.update({
       where: { id: decoded.id },
       data: {
         name,
         bio,
         ...(cvUrl && { cvUrl }),
+        ...(cvBase64 && { cvBase64 }),
       },
     })
 
-    return NextResponse.json({ message: 'Profil güncellendi', cvUrl: updated.cvUrl })
+    return NextResponse.json({ message: 'Profil güncellendi', cvUrl })
   } catch (err) {
     console.error('POST /api/me error:', err)
     return NextResponse.json({ message: 'Sunucu hatası' }, { status: 500 })
@@ -99,7 +94,10 @@ export async function DELETE() {
 
     await prisma.user.update({
       where: { id: decoded.id },
-      data: { cvUrl: null },
+      data: {
+        cvUrl: null,
+        cvBase64: null,
+      },
     })
 
     return NextResponse.json({ message: 'CV silindi' })

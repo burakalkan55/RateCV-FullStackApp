@@ -11,7 +11,7 @@ interface UserWithCV {
 }
 
 
-const handleViewCV = (base64: string, name: string) => {
+const handleViewCV = (base64: string) => {
     const byteCharacters = atob(base64)
     const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i))
     const byteArray = new Uint8Array(byteNumbers)
@@ -35,17 +35,18 @@ export default function HomePage() {
             } catch (error) {
                 console.error('Error fetching CV data:', error)
             } finally {
-                setLoading(false)
-            }        }
+                setLoading(false)            }
+        }
         fetchData()
-    }, []);return (
+    }, []);
+    
+    return (
         <main className={styles.container}>
           
 
-            {loading ? (
-                <div className={styles.loadingContainer}>
+            {loading ? (                <div className={styles.loadingContainer}>
                     <div className={styles.spinner}></div>
-                    <p className={styles.loadingText}>CV'ler yükleniyor...</p>
+                    <p className={styles.loadingText}>CV&apos;ler yükleniyor...</p>
                 </div>
             ) : users.length === 0 ? (
                 <div className={styles.emptyMessage}>Gösterilecek CV bulunamadı.</div>
@@ -54,9 +55,8 @@ export default function HomePage() {
                     {users.map((user) => (
                         <li key={user.id} className={styles.cvItem}>
                             <h3 className={styles.userName}>{user.name}</h3>
-                            {user.bio && <p className={styles.userBio}>{user.bio}</p>}
-                            <button
-                                onClick={() => handleViewCV(user.cvBase64!, user.name)}
+                            {user.bio && <p className={styles.userBio}>{user.bio}</p>}                            <button
+                                onClick={() => handleViewCV(user.cvBase64!)}
                                 className={styles.viewButton}
                             >
                                 <span className={styles.icon}>📄</span> View CV

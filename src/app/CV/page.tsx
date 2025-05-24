@@ -12,6 +12,12 @@ interface UserWithCV {
 
 
 const handleViewCV = (base64: string) => {
+    // Skip processing if no base64 data
+    if (!base64) {
+        alert('No CV available to view');
+        return;
+    }
+    
     const byteCharacters = atob(base64)
     const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i))
     const byteArray = new Uint8Array(byteNumbers)
@@ -26,10 +32,9 @@ export default function HomePage() {
     const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true)
-                const res = await fetch('/api/cv')
+        const fetchData = async () => {            try {
+                setLoading(true);
+                const res = await fetch('/api/cv-board')
                 const data = await res.json()
                 setUsers(data.users)
             } catch (error) {

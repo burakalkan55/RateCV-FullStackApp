@@ -21,6 +21,13 @@ export default function Navbar() {
         </div>
 
         <div className={`${styles.links} ${open ? styles.open : ''}`}>
+
+             <Link
+            href="/CV"
+            className={`${styles.button} ${pathname === '/CV' ? styles.active : ''}`}
+          >
+            Rate CVs
+          </Link>
           <Link
             href="/login"
             className={`${styles.button} ${pathname === '/login' ? styles.active : ''}`}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import styles from '@/styles/ViewCV.module.css'
+import styles from '../../styles/ViewCV.module.css'
 
 interface UserWithCV {
     id: number

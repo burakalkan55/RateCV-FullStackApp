@@ -49,8 +49,8 @@ export default function ProfilePage() {
         setMessage('❌ Sadece PDF dosyası yüklenebilir.')
         return
       }
-      if (cvFile.size > 100 * 1024) {
-        setMessage('❌ Dosya boyutu 100KB\'yi geçemez.')
+      if (cvFile.size > 1000 * 1024) {
+        setMessage('❌ Dosya boyutu 1000KB\'yi geçemez.')
         return
       }
       formData.append('cv', cvFile)

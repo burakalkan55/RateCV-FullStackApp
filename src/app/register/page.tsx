@@ -1,13 +1,15 @@
 'use client'
 import { useState, useEffect } from 'react'
 import styles from '../../styles/RegisterPage.module.css'
+import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [message, setMessage] = useState<string>('')
-
+  const router = useRouter()
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setMessage('') // Önceki mesajı temizle
@@ -25,6 +27,12 @@ export default function RegisterPage() {
         setName('')
         setEmail('')
         setPassword('')
+        
+        // Wait a moment before redirecting
+        setTimeout(() => {
+          // Use window.location for a full page refresh after successful registration
+          window.location.href = '/login'
+        }, 1000)
       } else {
         setMessage(`❌ ${data.message}`)
       }

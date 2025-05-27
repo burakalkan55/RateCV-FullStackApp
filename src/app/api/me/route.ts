@@ -21,7 +21,6 @@ export async function GET() {
         email: true,
         bio: true,
         cvUrl: true,
-        cvBase64: true,
       },
     })
 
@@ -49,7 +48,6 @@ export async function POST(req: NextRequest) {
     const file = formData.get('cv') as File | null
 
     let cvUrl: string | null = null
-    let cvBase64: string | null = null
 
     if (file && file.size > 0) {
       // sadece .pdf
@@ -62,9 +60,8 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: 'Dosya 1MB\'den büyük olamaz.' }, { status: 400 })
       }
 
-      const buffer = Buffer.from(await file.arrayBuffer())
+      // Sadece dosya adını veya URL yolunu sakla
       cvUrl = file.name
-      cvBase64 = buffer.toString('base64')
     }
 
     await prisma.user.update({
@@ -73,7 +70,6 @@ export async function POST(req: NextRequest) {
         name,
         bio,
         ...(cvUrl && { cvUrl }),
-        ...(cvBase64 && { cvBase64 }),
       },
     })
 
@@ -96,7 +92,6 @@ export async function DELETE() {
       where: { id: decoded.id },
       data: {
         cvUrl: null,
-        cvBase64: null,
       },
     })
 

@@ -71,8 +71,13 @@ export default function ProfilePage() {
   }
 
   const handleLogout = async () => {
-    await fetch('/api/logout', { method: 'POST' })
-    router.push('/login')
+    try {
+      await fetch('/api/logout', { method: 'POST' })
+      // Force a full page refresh after logout to reset all state
+      window.location.href = '/login'
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
   }
   const handleDeleteCV = async () => {
     const res = await fetch('/api/me', { method: 'DELETE' })

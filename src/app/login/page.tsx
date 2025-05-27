@@ -24,17 +24,15 @@ export default function LoginPage() {
 
       const data = await res.json()
       if (res.ok) {
-        setMessage('✅ Login successful!')
-        setName('')
-        setPassword('')
-        router.push('/profile') // Redirect to dashboard or home page
-        // TODO: Redirect (e.g. /dashboard)
+        setMessage('✅ Giriş başarılı!')
+        // Use a hard refresh instead of client-side navigation to ensure state is reset
+        window.location.href = '/profile'
       } else {
-        setMessage(`❌ ${data.message}`)
+        setMessage(`❌ ${data.message || 'Giriş hatası'}`)
       }
-    } catch (error) {
-      console.error(error)
-      setMessage('❌ Server error.')
+    } catch (err) {
+      console.error('Login error:', err)
+      setMessage('❌ Sunucu hatası')
     }
   }
 
@@ -51,10 +49,10 @@ export default function LoginPage() {
         <h1 className={styles.title}>Sign in to your account</h1>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
-            <label className={styles.inputLabel}>Full name</label>
+            <label className={styles.inputLabel}>Username</label>
             <input
               type="text"
-              placeholder="Full name"
+              placeholder="Username"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={styles.input}

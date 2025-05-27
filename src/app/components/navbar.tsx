@@ -1,13 +1,20 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import styles from '../../styles/Navbar.module.css'
+import { useAuth } from '../hooks/useAuth'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const { isAuthenticated, loading, refreshAuth } = useAuth()
+  
+  // Refresh auth state when pathname changes (navigation)
+  useEffect(() => {
+    refreshAuth()
+  }, [pathname, refreshAuth])
 
   return (
     <nav className={styles.navbar}>
@@ -21,25 +28,41 @@ export default function Navbar() {
         </div>
 
         <div className={`${styles.links} ${open ? styles.open : ''}`}>
-
-             <Link
-            href="/CV"
-            className={`${styles.button} ${pathname === '/CV' ? styles.active : ''}`}
-          >
-            Rate CVs
-          </Link>
-          <Link
-            href="/login"
-            className={`${styles.button} ${pathname === '/login' ? styles.active : ''}`}
-          >
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className={`${styles.button} ${pathname === '/register' ? styles.active : ''}`}
-          >
-            Sign Up
-          </Link>
+          {!loading && (
+            <>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    href="/CV"
+                    className={`${styles.button} ${pathname === '/CV' ? styles.active : ''}`}
+                  >
+                    Rate CVs
+                  </Link>
+                  <Link
+                    href="/profile"
+                    className={`${styles.button} ${pathname === '/profile' ? styles.active : ''}`}
+                  >
+                    Profile
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className={`${styles.button} ${pathname === '/login' ? styles.active : ''}`}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/register"
+                    className={`${styles.button} ${pathname === '/register' ? styles.active : ''}`}
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
     </nav>

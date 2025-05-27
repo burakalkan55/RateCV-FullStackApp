@@ -80,7 +80,7 @@ export default function ProfilePage() {
         return
       }
       if (cvFile.size > 1000 * 1024) {
-        setMessage('❌ Dosya boyutu 1000KB\'yi geçemez.')
+        setMessage('❌ Dosya boyutu 1000KB&apos;yi geçemez.')
         stopLoading()
         return
       }

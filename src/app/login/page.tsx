@@ -2,18 +2,18 @@
 
 import { useState, useEffect } from 'react'
 import styles from '../../styles/LoginPage.module.css'
+import { useLoading } from '../context/LoadingContext'
 
 export default function LoginPage() {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
-
-
-
+  const { startLoading, stopLoading } = useLoading()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setMessage('')
+    startLoading('Signing in...')
 
     try {
       const res = await fetch('/api/login', {
@@ -29,10 +29,12 @@ export default function LoginPage() {
         window.location.href = '/profile'
       } else {
         setMessage(`❌ ${data.message || 'Giriş hatası'}`)
+        stopLoading()
       }
     } catch (err) {
       console.error('Login error:', err)
       setMessage('❌ Sunucu hatası')
+      stopLoading()
     }
   }
 

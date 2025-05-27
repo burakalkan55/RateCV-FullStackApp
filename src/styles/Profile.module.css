@@ -140,3 +140,77 @@
 .logoutButton:hover {
   background: #343a40;
 }
+
+/* Yeni stil sınıflarını ekleyin */
+.currentCvSection {
+  margin: 20px 0;
+  width: 100%;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.pdfContainer {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.pdfViewer {
+  width: 100%;
+  height: 500px;
+  background-color: #f5f5f5;
+}
+
+.cvIndicator {
+  margin: 15px 0;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.cvUploaded {
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.cvActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* Make buttons more compact if needed */
+.viewButton, .deleteButton {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.viewButton {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+}
+
+.viewButton:hover {
+  background-color: #0b7dda;
+}
+
+.deleteButton {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
+}

@@ -21,6 +21,7 @@ export async function GET() {
         email: true,
         bio: true,
         cvUrl: true,
+        cvBase64: true, // Add this field to include the base64 data
       },
     })
 

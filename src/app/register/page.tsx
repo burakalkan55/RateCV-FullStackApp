@@ -3,16 +3,18 @@ import { useState, useEffect } from 'react'
 import styles from '../../styles/RegisterPage.module.css'
 
 
+
 export default function RegisterPage() {
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [message, setMessage] = useState<string>('')
-
+ 
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setMessage('') // Önceki mesajı temizle
+
 
     try {
       const res = await fetch('/api/register', {
@@ -35,10 +37,12 @@ export default function RegisterPage() {
         }, 1000)
       } else {
         setMessage(`❌ ${data.message}`)
+        
       }
     } catch (err: unknown) {
       console.error(err)
       setMessage('❌ Sunucu hatası.')
+      
     }
   }
 

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import styles from '../../styles/Navbar.module.css'
 import { useAuth } from '../hooks/useAuth'
@@ -11,10 +11,92 @@ export default function Navbar() {
   const pathname = usePathname()
   const { isAuthenticated, loading, refreshAuth } = useAuth()
   
-  // Refresh auth state when pathname changes (navigation)
+  // Track meaningful path changes that require auth refresh
+  const previousPathRef = useRef(pathname)
+  const authSensitivePaths = ['/login', '/register', '/profile', '/CV']
+  
   useEffect(() => {
-    refreshAuth()
+    // Only refresh auth when navigating to/from auth-sensitive pages
+    if (previousPathRef.current !== pathname) {
+      const wasAuthPath = authSensitivePaths.some(path => previousPathRef.current?.startsWith(path))
+      const isAuthPath = authSensitivePaths.some(path => pathname?.startsWith(path))
+      
+      if (wasAuthPath || isAuthPath) {
+        refreshAuth()
+      }
+      
+      previousPathRef.current = pathname
+    }
   }, [pathname, refreshAuth])
+
+  const handleLogout = async () => {
+    try {
+      // Clear session indicator immediately for faster UI feedback
+      localStorage.removeItem('hasSession');
+      
+      await fetch('/api/logout', { method: 'POST' })
+      // Force a full page refresh after logout to reset all state
+      window.location.href = '/login'
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
+  }
+
+  // Determine which links to show
+  const renderNavLinks = () => {
+    // Show skeleton loading state if we're loading and don't have previous auth state
+    if (loading && typeof window !== 'undefined' && localStorage.getItem('hasSession') === null) {
+      return (
+        <>
+          <div className={styles.skeletonButton}></div>
+          <div className={styles.skeletonButton}></div>
+        </>
+      );
+    }
+
+    // Otherwise show links based on current auth state
+    if (isAuthenticated) {
+      return (
+        <>
+          <Link
+            href="/CV"
+            className={`${styles.button} ${pathname === '/CV' ? styles.active : ''}`}
+          >
+            Rate CVs
+          </Link>
+          <Link
+            href="/profile"
+            className={`${styles.button} ${pathname === '/profile' ? styles.active : ''}`}
+          >
+            Profile
+          </Link>
+          <button 
+            onClick={handleLogout}
+            className={`${styles.button} ${styles.logoutButton}`}
+          >
+            🚪 Logout
+          </button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Link
+            href="/login"
+            className={`${styles.button} ${pathname === '/login' ? styles.active : ''}`}
+          >
+            Login
+          </Link>
+          <Link
+            href="/register"
+            className={`${styles.button} ${pathname === '/register' ? styles.active : ''}`}
+          >
+            Sign Up
+          </Link>
+        </>
+      );
+    }
+  };
 
   return (
     <nav className={styles.navbar}>
@@ -28,41 +110,7 @@ export default function Navbar() {
         </div>
 
         <div className={`${styles.links} ${open ? styles.open : ''}`}>
-          {!loading && (
-            <>
-              {isAuthenticated ? (
-                <>
-                  <Link
-                    href="/CV"
-                    className={`${styles.button} ${pathname === '/CV' ? styles.active : ''}`}
-                  >
-                    Rate CVs
-                  </Link>
-                  <Link
-                    href="/profile"
-                    className={`${styles.button} ${pathname === '/profile' ? styles.active : ''}`}
-                  >
-                    Profile
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    className={`${styles.button} ${pathname === '/login' ? styles.active : ''}`}
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    href="/register"
-                    className={`${styles.button} ${pathname === '/register' ? styles.active : ''}`}
-                  >
-                    Sign Up
-                  </Link>
-                </>
-              )}
-            </>
-          )}
+          {renderNavLinks()}
         </div>
       </div>
     </nav>

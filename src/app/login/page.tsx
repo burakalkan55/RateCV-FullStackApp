@@ -1,5 +1,5 @@
 'use client'
-import { useRouter } from 'next/navigation'
+
 import { useState, useEffect } from 'react'
 import styles from '../../styles/LoginPage.module.css'
 
@@ -8,7 +8,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
 
-  const router = useRouter()
+
 
 
   const handleSubmit = async (e: React.FormEvent) => {

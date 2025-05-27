@@ -32,7 +32,9 @@ export default function Navbar() {
   const handleLogout = async () => {
     try {
       // Clear session indicator immediately for faster UI feedback
-      localStorage.removeItem('hasSession');
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('hasSession');
+      }
       
       await fetch('/api/logout', { method: 'POST' })
       // Force a full page refresh after logout to reset all state
@@ -41,62 +43,6 @@ export default function Navbar() {
       console.error('Logout error:', error)
     }
   }
-
-  // Determine which links to show
-  const renderNavLinks = () => {
-    // Show skeleton loading state if we're loading and don't have previous auth state
-    if (loading && typeof window !== 'undefined' && localStorage.getItem('hasSession') === null) {
-      return (
-        <>
-          <div className={styles.skeletonButton}></div>
-          <div className={styles.skeletonButton}></div>
-        </>
-      );
-    }
-
-    // Otherwise show links based on current auth state
-    if (isAuthenticated) {
-      return (
-        <>
-          <Link
-            href="/CV"
-            className={`${styles.button} ${pathname === '/CV' ? styles.active : ''}`}
-          >
-            Rate CVs
-          </Link>
-          <Link
-            href="/profile"
-            className={`${styles.button} ${pathname === '/profile' ? styles.active : ''}`}
-          >
-            Profile
-          </Link>
-          <button 
-            onClick={handleLogout}
-            className={`${styles.button} ${styles.logoutButton}`}
-          >
-            🚪 Logout
-          </button>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <Link
-            href="/login"
-            className={`${styles.button} ${pathname === '/login' ? styles.active : ''}`}
-          >
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className={`${styles.button} ${pathname === '/register' ? styles.active : ''}`}
-          >
-            Sign Up
-          </Link>
-        </>
-      );
-    }
-  };
 
   return (
     <nav className={styles.navbar}>
@@ -110,7 +56,49 @@ export default function Navbar() {
         </div>
 
         <div className={`${styles.links} ${open ? styles.open : ''}`}>
-          {renderNavLinks()}
+          {loading ? (
+            // Show loading placeholder that matches the layout
+            <>
+              <div className={styles.button} style={{ opacity: 0.5 }}>Loading...</div>
+              <div className={styles.button} style={{ opacity: 0.5 }}>Loading...</div>
+            </>
+          ) : isAuthenticated ? (
+            <>
+              <Link
+                href="/CV"
+                className={`${styles.button} ${pathname === '/CV' ? styles.active : ''}`}
+              >
+                Rate CVs
+              </Link>
+              <Link
+                href="/profile"
+                className={`${styles.button} ${pathname === '/profile' ? styles.active : ''}`}
+              >
+                Profile
+              </Link>
+              <button 
+                onClick={handleLogout}
+                className={`${styles.button} ${styles.logoutButton}`}
+              >
+                🚪 Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className={`${styles.button} ${pathname === '/login' ? styles.active : ''}`}
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className={`${styles.button} ${pathname === '/register' ? styles.active : ''}`}
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

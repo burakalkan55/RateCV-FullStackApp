@@ -14,25 +14,12 @@ const CACHE_EXPIRATION = 5 * 60 * 1000;
 // Global auth cache to persist across renders and components
 let authCache: CachedAuth | null = null;
 
-// Add a new function to check localStorage for a previous session
-const getInitialAuthState = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  
-  // Check if we have a session indicator in localStorage
-  const hasSession = localStorage.getItem('hasSession') === 'true';
-  
-  // Also use existing authCache if available
-  if (authCache && Date.now() - authCache.timestamp < CACHE_EXPIRATION) {
-    return authCache.isAuthenticated;
-  }
-  
-  return hasSession;
-};
-
 export function useAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(getInitialAuthState)
+  // Always start with false to match server state
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
   const [isRequestInProgress, setIsRequestInProgress] = useState(false)
+  const [hasHydrated, setHasHydrated] = useState(false)
 
   const checkAuth = useCallback(async (force = false) => {
     // If a request is already in progress, don't start another one
@@ -64,7 +51,7 @@ export function useAuth() {
         timestamp: Date.now()
       };
       
-      // Store auth state in localStorage for faster initial renders
+      // Store auth state in localStorage for faster subsequent visits
       if (typeof window !== 'undefined') {
         localStorage.setItem('hasSession', authenticated ? 'true' : 'false');
       }
@@ -85,14 +72,29 @@ export function useAuth() {
   // Function to refresh auth state
   const refreshAuth = useCallback(() => {
     if (!isRequestInProgress) {
-      checkAuth(true); // Force refresh without setting loading to true
+      checkAuth(true);
     }
   }, [checkAuth, isRequestInProgress]);
 
-  // Initial auth check
+  // Initial auth check and hydration handling
   useEffect(() => {
-    checkAuth();
+    // Mark as hydrated
+    setHasHydrated(true);
+    
+    // Try to get cached state first for faster UI updates
+    if (authCache && Date.now() - authCache.timestamp < CACHE_EXPIRATION) {
+      setIsAuthenticated(authCache.isAuthenticated);
+      setLoading(false);
+    } else {
+      // Check localStorage for quick initial state
+      const hasSession = localStorage.getItem('hasSession') === 'true';
+      if (hasSession) {
+        setIsAuthenticated(true);
+      }
+      // Still check with server for accurate state
+      checkAuth();
+    }
   }, [checkAuth]);
 
-  return { isAuthenticated, loading, refreshAuth }
+  return { isAuthenticated, loading: loading || !hasHydrated, refreshAuth }
 }

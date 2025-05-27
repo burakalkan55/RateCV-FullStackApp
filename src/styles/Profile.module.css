@@ -1,216 +1,481 @@
-/* 🌟 Profesyonel ve modern kullanıcı profili stili */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Modern Profile Page Styling */
 
 .wrapper {
-  max-width: 760px;
-  margin: 5rem auto;
-  padding: 3rem;
-  background: linear-gradient(to bottom right, #ffffff, #f7f9fc);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
   font-family: 'Inter', sans-serif;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  min-height: calc(100vh - 4rem);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
 }
 
-.title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #1c1c1c;
-  margin-bottom: 1rem;
-  text-align: center;
+.wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
 }
 
-.profileRow {
-  background: #f1f3f5;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+/* Header Section */
+.header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  z-index: 1;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.label {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #212529;
-  margin-bottom: 0.4rem;
-}
-
-.input,
-.textarea {
-  padding: 14px 16px;
-  border: 1px solid #ced4da;
-  border-radius: 10px;
-  background-color: #ffffff;
-  font-size: 1rem;
-  color: #212529;
-  transition: box-shadow 0.2s, border-color 0.2s;
-}
-
-.input:focus,
-.textarea:focus {
-  outline: none;
-  border-color: #4dabf7;
-  box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
-}
-
-.textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.cvSection {
+.headerContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f8f9fa;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-size: 0.97rem;
-  border: 1px solid #dee2e6;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 
-.deleteButton {
-  background: #fa5252;
-  color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease;
+.avatarSection {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.deleteButton:hover {
-  background: #e03131;
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
 }
 
-.button {
-  background: #51cf66;
-  color: #fff;
-  font-weight: 600;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.05rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  align-self: flex-start;
+.userInfo {
+  flex: 1;
 }
 
-.button:hover {
-  background: #40c057;
-}
-
-.message {
-  margin-top: 1rem;
-  text-align: center;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 10px;
-  border-radius: 8px;
-  background: #e6f4ea;
-  color: #2b8a3e;
-}
-
-.logoutButton {
-  background: #495057;
-  color: #fff;
-  font-weight: 600;
-  padding: 12px 18px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s;
-  align-self: flex-end;
-}
-
-.logoutButton:hover {
-  background: #343a40;
-}
-
-/* Yeni stil sınıflarını ekleyin */
-.currentCvSection {
-  margin: 20px 0;
-  width: 100%;
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-  color: #333;
-}
-
-.pdfContainer {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.pdfViewer {
-  width: 100%;
-  height: 500px;
-  background-color: #f5f5f5;
-}
-
-.cvIndicator {
-  margin: 15px 0;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background-color: #f9f9f9;
-}
-
-.cvUploaded {
-  color: #4caf50;
+  font-size: 1.1rem;
+  color: #64748b;
+  margin: 0;
   font-weight: 500;
+}
+
+.profileStats {
+  display: flex;
+  gap: 2rem;
+}
+
+.statItem {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 16px;
+  min-width: 100px;
+}
+
+.statLabel {
+  display: block;
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.statValue {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.cvActive {
+  color: #059669 !important;
+}
+
+.cvInactive {
+  color: #dc2626 !important;
+}
+
+/* Card Layout */
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.cardHeader {
+  padding: 2rem 2.5rem 1rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cardIcon {
+  font-size: 1.25rem;
+}
+
+/* Profile Information */
+.profileInfo {
+  padding: 2rem 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.infoLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.infoValue {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* CV Status */
+.cvStatusContent {
+  padding: 2rem 2.5rem;
+}
+
+.cvStatus {
+  margin-bottom: 2rem;
+}
+
+.cvStatusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-radius: 16px;
+  border: 1px solid #a7f3d0;
+}
+
+.cvStatusIcon {
+  font-size: 1.5rem;
+}
+
+.cvStatusText {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #065f46;
+  margin: 0 0 0.25rem 0;
+}
+
+.cvStatusDesc {
+  font-size: 0.9rem;
+  color: #047857;
+  margin: 0;
 }
 
 .cvActions {
   display: flex;
-  gap: 10px;
-  margin-top: 8px;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-/* Make buttons more compact if needed */
-.viewButton, .deleteButton {
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 0.9rem;
+/* Form Styling */
+.form {
+  padding: 2rem 2.5rem;
+}
+
+.formGroup {
+  margin-bottom: 2rem;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+}
+
+.fileRequirements {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.textarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  color: #1e293b;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Inter', sans-serif;
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+/* File Input */
+.fileInputWrapper {
+  position: relative;
+}
+
+.fileInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.fileInputLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border: 2px dashed rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  background: rgba(102, 126, 234, 0.05);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #475569;
+}
+
+.fileInputLabel:hover {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.fileIcon {
+  font-size: 1.25rem;
+}
+
+/* Buttons */
+.formActions {
+  margin-top: 2rem;
+}
+
+.saveButton, .viewButton, .deleteButton, .logoutButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+}
+
+.saveButton {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25);
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.35);
 }
 
 .viewButton {
-  background-color: #2196f3;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   color: white;
-  border: none;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25);
 }
 
 .viewButton:hover {
-  background-color: #0b7dda;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
 }
 
 .deleteButton {
-  background-color: #f44336;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: white;
-  border: none;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25);
 }
 
 .deleteButton:hover {
-  background-color: #d32f2f;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.35);
+}
+
+.accountActions {
+  padding: 2rem 2.5rem;
+}
+
+.logoutButton {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  color: white;
+  box-shadow: 0 6px 20px rgba(107, 114, 128, 0.25);
+}
+
+.logoutButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(107, 114, 128, 0.35);
+}
+
+.buttonIcon {
+  font-size: 1rem;
+}
+
+/* Message */
+.messageContainer {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 1000;
+}
+
+.message {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 1rem;
+  }
+  
+  .header {
+    padding: 1.5rem;
+  }
+  
+  .headerContent {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .profileStats {
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .cardHeader, .form, .profileInfo, .cvStatusContent, .accountActions {
+    padding: 1.5rem;
+  }
+  
+  .profileInfo {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .cvActions {
+    flex-direction: column;
+  }
+  
+  .messageContainer {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .profileStats {
+    gap: 1rem;
+  }
+  
+  .statItem {
+    padding: 0.75rem;
+    min-width: 80px;
+  }
 }

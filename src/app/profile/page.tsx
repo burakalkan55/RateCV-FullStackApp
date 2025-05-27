@@ -138,52 +138,157 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.title}>👤 Profil Sayfan</h2>
-
-      <div className={styles.profileRow}>
-        <p><strong>Ad Soyad:</strong> {name}</p>
-        <p><strong>Email:</strong> {email}</p>
+      {/* Header Section */}
+      <div className={styles.header}>
+        <div className={styles.headerContent}>
+          <div className={styles.avatarSection}>
+            <div className={styles.avatar}>
+              {name ? name.charAt(0).toUpperCase() : '👤'}
+            </div>
+            <div className={styles.userInfo}>
+              <h1 className={styles.title}>Welcome back!</h1>
+              <p className={styles.subtitle}>Manage your profile and CV</p>
+            </div>
+          </div>
+          <div className={styles.profileStats}>
+            <div className={styles.statItem}>
+              <span className={styles.statLabel}>Profile</span>
+              <span className={styles.statValue}>Active</span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statLabel}>CV Status</span>
+              <span className={`${styles.statValue} ${cvBase64 ? styles.cvActive : styles.cvInactive}`}>
+                {cvBase64 ? 'Uploaded' : 'Missing'}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
+      {/* Profile Information Card */}
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h2 className={styles.cardTitle}>
+            <span className={styles.cardIcon}>👤</span>
+            Personal Information
+          </h2>
+        </div>
+        <div className={styles.profileInfo}>
+          <div className={styles.infoItem}>
+            <label className={styles.infoLabel}>Full Name</label>
+            <p className={styles.infoValue}>{name || 'Not provided'}</p>
+          </div>
+          <div className={styles.infoItem}>
+            <label className={styles.infoLabel}>Email Address</label>
+            <p className={styles.infoValue}>{email || 'Not provided'}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* CV Status Card */}
       {cvBase64 && (
-        <div className={styles.cvIndicator}>
-          <p><strong>CV Durumu:</strong> <span className={styles.cvUploaded}>✅ Yüklendi</span></p>
-          <div className={styles.cvActions}>
-            <button className={styles.viewButton} onClick={handleViewPDF}>
-              📄 CV&apos;yi Yeni Sekmede Aç
-            </button>
-            <button className={styles.deleteButton} onClick={handleDeleteCV}>❌ Sil</button>
+        <div className={styles.card}>
+          <div className={styles.cardHeader}>
+            <h2 className={styles.cardTitle}>
+              <span className={styles.cardIcon}>📄</span>
+              Your CV
+            </h2>
+          </div>
+          <div className={styles.cvStatusContent}>
+            <div className={styles.cvStatus}>
+              <div className={styles.cvStatusIndicator}>
+                <span className={styles.cvStatusIcon}>✅</span>
+                <div>
+                  <p className={styles.cvStatusText}>CV Successfully Uploaded</p>
+                  <p className={styles.cvStatusDesc}>Your CV is ready for employers to view</p>
+                </div>
+              </div>
+            </div>
+            <div className={styles.cvActions}>
+              <button className={styles.viewButton} onClick={handleViewPDF}>
+                <span className={styles.buttonIcon}>👁️</span>
+                Preview CV
+              </button>
+              <button className={styles.deleteButton} onClick={handleDeleteCV}>
+                <span className={styles.buttonIcon}>🗑️</span>
+                Remove CV
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      <div className={styles.form}>
-        <label className={styles.label}>Bio</label>
-        <textarea
-          className={styles.textarea}
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-          placeholder="Kendinizi kısaca tanıtın"
-        />
+      {/* Edit Profile Form */}
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h2 className={styles.cardTitle}>
+            <span className={styles.cardIcon}>✏️</span>
+            Edit Profile
+          </h2>
+        </div>
+        <div className={styles.form}>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>About Me</label>
+            <textarea
+              className={styles.textarea}
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              placeholder="Tell us about yourself, your skills, and experience..."
+              rows={4}
+            />
+          </div>
 
-        <label className={styles.label}>CV Yükle (.pdf / max 1000KB)</label>
-        <input
-          type="file"
-          accept=".pdf"
-          onChange={(e) => setCvFile(e.target.files?.[0] || null)}
-          className={styles.input}
-        />
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              Upload CV
+              <span className={styles.fileRequirements}>PDF only, max 1MB</span>
+            </label>
+            <div className={styles.fileInputWrapper}>
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={(e) => setCvFile(e.target.files?.[0] || null)}
+                className={styles.fileInput}
+                id="cvUpload"
+              />
+              <label htmlFor="cvUpload" className={styles.fileInputLabel}>
+                <span className={styles.fileIcon}>📎</span>
+                {cvFile ? cvFile.name : 'Choose PDF file'}
+              </label>
+            </div>
+          </div>
 
-        <button className={styles.button} onClick={handleUpdate}>
-          💾 Kaydet
-        </button>
-
-        <button className={styles.logoutButton} onClick={handleLogout}>
-          🚪 Çıkış Yap
-        </button>
-
-        {message && <p className={styles.message}>{message}</p>}
+          <div className={styles.formActions}>
+            <button className={styles.saveButton} onClick={handleUpdate}>
+              <span className={styles.buttonIcon}>💾</span>
+              Save Changes
+            </button>
+          </div>
+        </div>
       </div>
+
+      {/* Account Actions */}
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h2 className={styles.cardTitle}>
+            <span className={styles.cardIcon}>⚙️</span>
+            Account Settings
+          </h2>
+        </div>
+        <div className={styles.accountActions}>
+          <button className={styles.logoutButton} onClick={handleLogout}>
+            <span className={styles.buttonIcon}>🚪</span>
+            Sign Out
+          </button>
+        </div>
+      </div>
+
+      {/* Message Display */}
+      {message && (
+        <div className={styles.messageContainer}>
+          <div className={styles.message}>{message}</div>
+        </div>
+      )}
     </div>
   )
 }

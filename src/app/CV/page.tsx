@@ -32,7 +32,7 @@ export default function CVPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [ratings, setRatings] = useState<{ [key: number]: number }>({})
   const [feedbacks, setFeedbacks] = useState<{ [key: number]: string }>({})
-  const [submittedRatings, setSubmittedRatings] = useState<{ [key: number]: boolean }>({})
+  const [, setSubmittedRatings] = useState<{ [key: number]: boolean }>({})
   const [showCommentsModal, setShowCommentsModal] = useState<boolean>(false)
   const [selectedUserComments, setSelectedUserComments] = useState<Comment[]>([])
   const [selectedUserName, setSelectedUserName] = useState<string>('')
@@ -158,6 +158,7 @@ export default function CVPage() {
     setSelectedUserName(userName)
     setShowCommentsModal(true)
     
+    
     try {
       const res = await fetch(`/api/get-comments?targetId=${userId}`)
       if (!res.ok) throw new Error('Failed to fetch comments')
@@ -255,6 +256,7 @@ export default function CVPage() {
                         setRatings((prev) => ({ ...prev, [user.id]: star }))
                       }}
                       className={`${styles.star} ${star <= (ratings[user.id] || 0) ? styles.starActive : ''}`}
+                      style={{ color: star <= (ratings[user.id] || 0) ? '#FFD700' : '#bbb', textShadow: star <= (ratings[user.id] || 0) ? '0 0 10px #FFD700' : 'none' }}
                       disabled={user.id === currentUser?.id}
                       aria-label={`Rate ${star} stars`}
                     >

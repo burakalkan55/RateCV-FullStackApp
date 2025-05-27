@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
     const file = formData.get('cv') as File | null
 
     let cvUrl: string | null = null
+    let cvBase64: string | null = null
 
     if (file && file.size > 0) {
       // sadece .pdf
@@ -61,7 +62,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: 'Dosya 1MB\'den büyük olamaz.' }, { status: 400 })
       }
 
-      // Sadece dosya adını veya URL yolunu sakla
+      // Convert file to base64
+      const bytes = await file.arrayBuffer()
+      const buffer = Buffer.from(bytes)
+      cvBase64 = buffer.toString('base64')
       cvUrl = file.name
     }
 
@@ -71,10 +75,15 @@ export async function POST(req: NextRequest) {
         name,
         bio,
         ...(cvUrl && { cvUrl }),
+        ...(cvBase64 && { cvBase64 }),
       },
     })
 
-    return NextResponse.json({ message: 'Profil güncellendi', cvUrl })
+    return NextResponse.json({ 
+      message: 'Profil güncellendi', 
+      cvUrl,
+      cvBase64 
+    })
   } catch (err) {
     console.error('POST /api/me error:', err)
     return NextResponse.json({ message: 'Sunucu hatası' }, { status: 500 })
@@ -93,6 +102,7 @@ export async function DELETE() {
       where: { id: decoded.id },
       data: {
         cvUrl: null,
+        cvBase64: null,
       },
     })
 

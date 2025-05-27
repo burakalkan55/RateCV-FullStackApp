@@ -55,11 +55,25 @@ export default function CVPage() {
         fetchData()
     }, [])
 
-    const handleRating = (userId: number, rating: number) => {
+    const handleRating = async (userId: number, rating: number) => {
+        // Update local state immediately for UI responsiveness
         setRatings(prev => ({
             ...prev,
             [userId]: rating
         }))
+        
+        // Here you could add API call to save the rating to the backend
+        try {
+            // Example API call (implement the actual endpoint)
+            // await fetch('/api/rate-cv', {
+            //    method: 'POST',
+            //    headers: { 'Content-Type': 'application/json' },
+            //    body: JSON.stringify({ userId, rating })
+            // })
+            console.log(`Rating ${rating} saved for user ${userId}`)
+        } catch (error) {
+            console.error('Error saving rating:', error)
+        }
     }
     
     return (

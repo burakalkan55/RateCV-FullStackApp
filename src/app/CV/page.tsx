@@ -27,6 +27,11 @@ interface CurrentUser {
   email: string
 }
 
+interface RatingData {
+  targetId: number
+  value: number
+}
+
 export default function CVPage() {
   const [users, setUsers] = useState<UserWithCV[]>([])
   const [loading, setLoading] = useState<boolean>(true)
@@ -75,8 +80,7 @@ export default function CVPage() {
             const ratingsData = await ratingsRes.json()
             const existingRatings: { [key: number]: number } = {}
             const existingSubmissions: { [key: number]: boolean } = {}
-            
-            ratingsData.ratings.forEach((rating: any) => {
+              ratingsData.ratings.forEach((rating: RatingData) => {
               existingRatings[rating.targetId] = rating.value
               existingSubmissions[rating.targetId] = true
             })

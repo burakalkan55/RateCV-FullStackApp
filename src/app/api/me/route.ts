@@ -10,18 +10,16 @@ const secret = process.env.JWT_SECRET || 'default_secret'
 export async function GET() {
   const token = (await cookies()).get('token')?.value
   if (!token) return NextResponse.json({ message: 'Yetkisiz erişim' }, { status: 401 })
-
   try {
     const decoded = jwt.verify(token, secret) as { id: number }
-
     const user = await prisma.user.findUnique({
-      where: { id: decoded.id },
-      select: {
+      where: { id: decoded.id },      select: {
+        id: true,
         name: true,
         email: true,
         bio: true,
         cvUrl: true,
-        cvBase64: true, // Add this field to include the base64 data
+        cvBase64: true,
       },
     })
 

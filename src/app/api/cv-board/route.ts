@@ -15,11 +15,32 @@ export async function GET() {
         id: true,
         name: true,
         bio: true,
-        cvBase64: true
+        cvBase64: true,
+        ratingsReceived: {
+          select: {
+            value: true
+          }
+        }
       }
     });
 
-    return NextResponse.json({ users }, { status: 200 });
+    // Calculate average ratings for each user
+    const usersWithAverageRating = users.map(user => {
+      const ratings = user.ratingsReceived;
+      const averageRating = ratings.length > 0 
+        ? ratings.reduce((sum, rating) => sum + rating.value, 0) / ratings.length 
+        : null;
+      
+      return {
+        id: user.id,
+        name: user.name,
+        bio: user.bio,
+        cvBase64: user.cvBase64,
+        averageRating
+      };
+    });
+
+    return NextResponse.json({ users: usersWithAverageRating }, { status: 200 });
   } catch (error) {
     console.error("Error fetching CVs:", error);
     return NextResponse.json(

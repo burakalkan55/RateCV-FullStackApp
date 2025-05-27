@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import styles from '../../styles/Profile.module.css'
-import { useRouter } from 'next/navigation'
+
 
 export default function ProfilePage() {
   const [name, setName] = useState('')
@@ -12,7 +12,7 @@ export default function ProfilePage() {
   const [cvBase64, setCvBase64] = useState<string | null>(null)
   const [cvFile, setCvFile] = useState<File | null>(null)
   const [message, setMessage] = useState('')
-  const router = useRouter()
+
 
   useEffect(() => {
     const fetchProfile = async () => {

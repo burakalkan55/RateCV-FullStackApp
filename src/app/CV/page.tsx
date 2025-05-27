@@ -61,9 +61,8 @@ export default function CVPage() {
         // Fetch current user info first
         const userRes = await fetch('/api/me')
         let currentUserId = null
-        if (userRes.ok) {
-          const userData = await userRes.json()
-          setCurrentUser({ id: userData.id, name: userData.name, email: userData.email })
+        if (userRes.ok) {        const userData = await userRes.json() as { id: number; name: string; email: string }
+        setCurrentUser({ id: userData.id, name: userData.name, email: userData.email })
           currentUserId = userData.id
         }
         
@@ -174,10 +173,9 @@ export default function CVPage() {
     } finally {
       setLoadingComments(false)
     }
-  }
-  // Add toast animation styles
+  }  // Add toast animation styles
   useEffect(() => {
-    if (typeof document !== 'undefined') {
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       const style = document.createElement('style')
       style.innerHTML = `@keyframes fadeInToast { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }`
       document.head.appendChild(style)

@@ -28,9 +28,11 @@ export default function Navbar() {
       previousPathRef.current = pathname
     }
   }, [pathname, refreshAuth])
-
   const handleLogout = async () => {
     try {
+      // Close hamburger menu
+      setOpen(false)
+      
       // Clear session indicator immediately for faster UI feedback
       if (typeof window !== 'undefined') {
         localStorage.removeItem('hasSession');
@@ -42,6 +44,10 @@ export default function Navbar() {
     } catch (error) {
       console.error('Logout error:', error)
     }
+  }
+
+  const handleLinkClick = () => {
+    setOpen(false)
   }
 
   return (
@@ -62,17 +68,18 @@ export default function Navbar() {
               <div className={styles.button} style={{ opacity: 0.5 }}>Loading...</div>
               <div className={styles.button} style={{ opacity: 0.5 }}>Loading...</div>
             </>
-          ) : isAuthenticated ? (
-            <>
+          ) : isAuthenticated ? (            <>
               <Link
                 href="/CV"
                 className={`${styles.button} ${pathname === '/CV' ? styles.active : ''}`}
+                onClick={handleLinkClick}
               >
                 Rate CVs
               </Link>
               <Link
                 href="/profile"
                 className={`${styles.button} ${pathname === '/profile' ? styles.active : ''}`}
+                onClick={handleLinkClick}
               >
                 Profile
               </Link>
@@ -83,17 +90,18 @@ export default function Navbar() {
                 🚪 Logout
               </button>
             </>
-          ) : (
-            <>
+          ) : (            <>
               <Link
                 href="/login"
                 className={`${styles.button} ${pathname === '/login' ? styles.active : ''}`}
+                onClick={handleLinkClick}
               >
                 Login
               </Link>
               <Link
                 href="/register"
                 className={`${styles.button} ${pathname === '/register' ? styles.active : ''}`}
+                onClick={handleLinkClick}
               >
                 Sign Up
               </Link>

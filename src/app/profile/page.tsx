@@ -150,7 +150,7 @@ export default function ProfilePage() {
           <p><strong>CV Durumu:</strong> <span className={styles.cvUploaded}>✅ Yüklendi</span></p>
           <div className={styles.cvActions}>
             <button className={styles.viewButton} onClick={handleViewPDF}>
-              📄 CV'yi Yeni Sekmede Aç
+              📄 CV&apos;yi Yeni Sekmede Aç
             </button>
             <button className={styles.deleteButton} onClick={handleDeleteCV}>❌ Sil</button>
           </div>

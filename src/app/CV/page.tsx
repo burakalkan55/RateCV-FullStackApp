@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import styles from '../../styles/ViewCV.module.css'
-import { useAuth } from '../hooks/useAuth'
+
 
 interface UserWithCV {
   id: number

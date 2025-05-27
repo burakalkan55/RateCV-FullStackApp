@@ -175,6 +175,14 @@ export default function CVPage() {
       setLoadingComments(false)
     }
   }
+  // Add toast animation styles
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const style = document.createElement('style')
+      style.innerHTML = `@keyframes fadeInToast { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }`
+      document.head.appendChild(style)
+    }
+  }, [])
 
   return (
     <main className={styles.container}>
@@ -359,13 +367,7 @@ export default function CVPage() {
               )}
             </div>
           </div>
-        </div>
-      )}
+        </div>      )}
     </main>
   )
 }
-
-// Add fadeIn animation for toast
-const style = document.createElement('style')
-style.innerHTML = `@keyframes fadeInToast { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }`
-document.head.appendChild(style)

@@ -16,6 +16,18 @@ export default function ProfilePage() {
   const [isProfileLoaded, setIsProfileLoaded] = useState(false)
   const [lastFetchTime, setLastFetchTime] = useState(0)
 
+  // Add this useEffect to auto-clear messages after 3 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage('')
+      }, 2000) // 2 seconds
+
+      // Cleanup function to clear timer if component unmounts or message changes
+      return () => clearTimeout(timer)
+    }
+  }, [message])
+
   useEffect(() => {
     // Avoid re-fetching profile data too frequently
     const now = Date.now();

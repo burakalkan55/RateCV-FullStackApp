@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🔗 RateCV – Full Stack Application
+Tech Stack:
 
-## Getting Started
+Frontend: TypeScript (TSX), Next.js
 
-First, run the development server:
+Backend: TypeScript (TS), Node.js, Next.js API routes
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Database: PostgreSQL (hosted on Render)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ORM: Prisma
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Styling: Classic CSS (Note: I usually prefer Material UI, but focused more on TypeScript & Next.js structure here)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Deployment: Full deployment on Render.com (Web Service + Cloud DB)
 
-## Learn More
+Key Features:
+✅ Server-Side Rendering with Next.js
+✅ Strong type safety with full TypeScript implementation (frontend & backend)
+✅ Prisma-powered database operations
+✅ PostgreSQL for robust relational data handling
+✅ Clean routing and API handling with Next.js
+✅ Cloud deployment (zero-config with Render.com)
 
-To learn more about Next.js, take a look at the following resources:
+This project highlights my focus on scalable architecture and type-safe development with TypeScript and Next.js.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*Login Page*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![image](https://github.com/user-attachments/assets/8643e558-3106-42c1-9b83-426359fb541d)
 
-## Deploy on Vercel
+*Register Page*
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![image](https://github.com/user-attachments/assets/242992ad-c541-4b04-8c76-d647dcd9a92b)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Rating Cv and Give FeedBack system*
+
+![image](https://github.com/user-attachments/assets/f6b2063d-06cd-44dd-a584-975e49358142)
+
+
+*Comments Section*
+
+![image](https://github.com/user-attachments/assets/39718592-54ab-43aa-9848-a39e64a48fd5)
